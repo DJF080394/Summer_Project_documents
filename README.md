@@ -21,7 +21,7 @@ This repository contains the lightweight GitHub version of an MSc robotics proje
 - Performance Metrics for controller comparison
 - UR5-style robotic disassembly planning
 
-The system is designed for a controlled, non-clinical stream of clean tube-like plastic objects. It should be understood as a reproducible digital-twin study rather than a validated industrial medical-waste handling system.
+The system is designed for a controlled, non-clinical stream of clean tube-like plastic objects. It should be understood as a reproducible simulation-based sorting study rather than a validated industrial medical-waste handling system.
 
 ---
 
