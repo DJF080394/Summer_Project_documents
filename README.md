@@ -1,4 +1,4 @@
-# Digital Twin of Reinforcement Learning Driven Medical Tube Sorting and Disassembly
+# Intelligent Conveyor Sorting Using YOLO and Reinforcement Learning for Medical Waste
 
 ### Sustainable automated plastic sorting using computer vision, reinforcement learning, PyBullet simulation, and robotic disassembly planning
 
@@ -120,7 +120,6 @@ Key findings:
 
 ```text
 Summer_Project_documents/
-|-- README.md
 |-- requirements.txt
 |-- code/
 |   |-- tube_detection_project.py
@@ -142,7 +141,6 @@ Summer_Project_documents/
 |-- docs/
 |   `-- large_files_not_uploaded.csv
 `-- data/
-    `-- README.md
 ```
 
 ---
