@@ -119,8 +119,7 @@ Key findings:
 ## Repository Structure
 
 ```text
-Summer_Project_documents/
-|-- requirements.txt
+Conveyor-Belt-Tube-Detection-System-main/
 |-- code/
 |   |-- tube_detection_project.py
 |   |-- sample_test.py
@@ -132,16 +131,26 @@ Summer_Project_documents/
 |   |-- run_decision_zone_formal_training.py
 |   |-- summarise_formal_outputs.py
 |   `-- evaluate_formal_outputs.py
+|-- data/
+|   `-- README.md
+|-- docs/
+|   |-- GIT_WORKFLOW.md
+|   |-- large_files_not_uploaded.csv
+|   `-- paper_chinese_translation_and_analysis.md
+|-- figures/
 |-- results/
 |   |-- system_overview_schematic.png
 |   |-- rl_100k_controller_metrics.png
 |   |-- rl_100k_state_action_heatmaps.png
 |   |-- rl_100k_baseline_ppo_sac_comparison.png
 |   `-- rl_100k_baseline_ppo_sac_metrics.csv
-|-- docs/
-|   `-- large_files_not_uploaded.csv
-`-- data/
+|-- tools/
+|-- CONTRIBUTING.md
+|-- requirements.txt
+`-- README.md
 ```
+
+Large local archives, CAD files, report builds, and temporary outputs are kept outside the lightweight GitHub-facing structure and are ignored by Git where appropriate.
 
 ---
 
@@ -162,14 +171,12 @@ Summer_Project_documents/
 
 ---
 
-## Running Notes
+## Setup
 
-This GitHub version is intentionally lightweight. Large model files, full datasets, generated logs, CAD files, meshes, and policy archives are excluded so that the repository remains small enough for GitHub upload.
+Install the Python dependencies:
 
-The excluded files are listed in:
-
-```text
-docs/large_files_not_uploaded.csv
+```bash
+pip install -r requirements.txt
 ```
 
 Typical commands:
@@ -181,7 +188,11 @@ python code/rl_training_ppo.py
 python code/rl_training_sac.py
 ```
 
-Some scripts may require restored datasets, model weights, URDF files, or adjusted local paths before full reproduction.
+Some scripts may require restored datasets, model weights, URDF files, or adjusted local paths before full reproduction. Large files excluded from the lightweight upload are listed in:
+
+```text
+docs/large_files_not_uploaded.csv
+```
 
 ---
 
