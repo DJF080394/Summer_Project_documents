@@ -1,210 +1,156 @@
-# Intelligent Conveyor Sorting Using YOLO and Reinforcement Learning for Medical Waste
+# Intelligent Conveyor Belt Tube Detection and Sorting System
 
-### Sustainable automated plastic sorting using computer vision, reinforcement learning, PyBullet simulation, and robotic disassembly planning
+### Computer vision, conveyor simulation, pneumatic sorting, and CAD-based system design
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
-![RL](https://img.shields.io/badge/Reinforcement%20Learning-PPO%20%7C%20SAC-green)
-![Simulation](https://img.shields.io/badge/Simulation-PyBullet-orange)
 ![Vision](https://img.shields.io/badge/Computer%20Vision-YOLOv8-red)
-![Robotics](https://img.shields.io/badge/Robot-UR5%20%2B%20Robotiq85-lightgrey)
+![Simulation](https://img.shields.io/badge/Simulation-PyBullet-orange)
+![CAD](https://img.shields.io/badge/CAD-Fusion%20360-lightgrey)
+![Robotics](https://img.shields.io/badge/Robotics-Conveyor%20Sorting-green)
 
 ---
 
 ## Overview
 
-This repository contains the lightweight GitHub version of an MSc robotics project on simulation-based medical tube sorting and disassembly. The project combines:
+This repository contains the uploaded project package for an intelligent conveyor-belt tube detection and sorting system. The project combines:
 
-- computer vision for tube detection
-- PyBullet-based conveyor simulation
-- timing-aware pneumatic sorting control
-- PPO and SAC reinforcement-learning policies
-- Performance Metrics for controller comparison
-- UR5-style robotic disassembly planning
+- YOLO-style tube detection
+- conveyor-belt simulation
+- pneumatic air-jet sorting logic
+- baseline controller evaluation
+- PyBullet mesh and URDF assets
+- Fusion 360 CAD models for the conveyor, bins, funnel, hopper, and air-jet components
 
-The system is designed for a controlled, non-clinical stream of clean tube-like plastic objects. It should be understood as a reproducible simulation-based sorting study rather than a validated industrial medical-waste handling system.
-
----
-
-## System Architecture
-
-![YOLO-to-control tube sorting workflow](./results/system_overview_schematic.png)
-
-The pipeline connects perception, control, simulation, and planned disassembly:
-
-1. Tube-like plastic objects enter the conveyor scene.
-2. YOLO detects whole tube objects and returns class, position, confidence, and short-term stability.
-3. A timing-aware state is constructed from the detection output, conveyor motion, target jet position, and nozzle-window status.
-4. The timing baseline, PPO, or SAC controller selects either no-action or one of five air-jet commands.
-5. PyBullet simulates the sorting outcome and records reward, correct response, no response, and wrong response.
-6. Sorted tubes are collected in bins before the planned UR5-style robot disassembly stage.
-
----
-
-## Technologies Used
-
-- Python
-- PyBullet
-- Gymnasium
-- Stable-Baselines3
-- OpenCV
-- YOLOv8-style detection
-- NumPy
-- Matplotlib
-- URDF-based simulation assets
-
----
-
-## Reinforcement Learning Formulation
-
-The sorting controller is formulated as a Markov Decision Process:
-
-```text
-M = <S, A, P, R, gamma>
-```
-
-### Timing-Aware State
-
-The state links perception to conveyor timing:
-
-```python
-[y_t, class_t, confidence_t, target_jet_y, delta_y,
- x_t, v_x_t, v_y_t, in_nozzle_window, already_fired]
-```
-
-### Action Space
-
-The controller uses six pneumatic commands:
-
-```python
-0 = Jet 1
-1 = Jet 2
-2 = Jet 3
-3 = Jet 4
-4 = Jet 5
-5 = No action
-```
-
-PPO selects directly from this discrete action set. SAC produces a continuous scalar output that is floored and clipped into the same six-command interface.
-
-### Controllers
-
-- **Timing baseline**: rule-based controller using class-to-jet mapping and nozzle-window timing.
-- **PPO**: discrete actor-critic reinforcement-learning controller.
-- **SAC**: entropy-regularised reinforcement-learning controller with discretised pneumatic output.
-
----
-
-## Results Summary
-
-The current evaluation uses **Performance Metrics** measured only when a tube is inside the physically relevant nozzle-window interval. Ordinary conveyor travel before the tube reaches the jet is not counted as a controller response.
-
-![Controller response metrics](./results/rl_100k_controller_metrics.png)
-
-| Controller | Deterministic Correct Response | Randomised Correct Response | Main Observation |
-|---|---:|---:|---|
-| Timing baseline | 100.0% | 100.0% | Calibrated reference controller |
-| PPO | 75.0% | 50.0% | Learns useful nozzle-window responses after reward correction |
-| SAC | 50.0% | 50.0% | Responsive but conservative under the current setup |
-
-Key findings:
-
-- Reward convergence alone is not sufficient to prove useful sorting behaviour.
-- The corrected PPO run avoids the earlier full no-response collapse.
-- SAC remains responsive but leaves many relevant nozzle-window decisions as no-response.
-- The timing baseline is the strongest reference controller in the present simulation.
-- Physical prototype testing and richer final-bin validation are still required.
+The system is intended as an academic simulation and design project. It is not a validated industrial or clinical medical-waste handling system.
 
 ---
 
 ## Repository Structure
 
+The repository is intentionally stored as a compact flat upload with source code, CAD models, result archives, figures, meshes, and URDF assets at the root level.
+
 ```text
 Conveyor-Belt-Tube-Detection-System-main/
-|-- code/
-|   |-- tube_detection_project.py
-|   |-- sample_test.py
-|   |-- object_deyection.py
-|   |-- evaluate_baselines.py
-|   |-- rl_training_ppo.py
-|   |-- rl_training_sac.py
-|   |-- train_final_rl_controllers.py
-|   |-- run_decision_zone_formal_training.py
-|   |-- summarise_formal_outputs.py
-|   `-- evaluate_formal_outputs.py
-|-- data/
-|   `-- README.md
-|-- docs/
-|   |-- GIT_WORKFLOW.md
-|   |-- large_files_not_uploaded.csv
-|   `-- paper_chinese_translation_and_analysis.md
-|-- figures/
-|-- results/
-|   |-- system_overview_schematic.png
-|   |-- rl_100k_controller_metrics.png
-|   |-- rl_100k_state_action_heatmaps.png
-|   |-- rl_100k_baseline_ppo_sac_comparison.png
-|   `-- rl_100k_baseline_ppo_sac_metrics.csv
-|-- tools/
-|-- CONTRIBUTING.md
-|-- requirements.txt
-`-- README.md
+|-- 01_code.zip
+|-- Conveyor Belt Project.f3d
+|-- Conveyor Belt Shortened.f3d
+|-- Conveyor Belt with Hopper.f3d
+|-- README.md
+|-- air jet.f3d
+|-- baseline_results.zip
+|-- bin (~recovered).f3d
+|-- bin funnel.f3d
+|-- figures.zip
+|-- meshes.zip
+`-- urdfs.zip
 ```
-
-Large local archives, CAD files, report builds, and temporary outputs are kept outside the lightweight GitHub-facing structure and are ignored by Git where appropriate.
 
 ---
 
-## Main Scripts
+## File Description
 
-| Script | Purpose |
+| File | Description |
 |---|---|
-| `code/tube_detection_project.py` | Main conveyor and tube detection project script |
-| `code/sample_test.py` | Simulated camera view, YOLO display, and conveyor scene testing |
-| `code/object_deyection.py` | Synthetic object detection and annotation workflow |
-| `code/evaluate_baselines.py` | Timing baseline evaluation |
-| `code/rl_training_ppo.py` | PPO training entry point |
-| `code/rl_training_sac.py` | SAC training entry point |
-| `code/train_final_rl_controllers.py` | Shared PPO/SAC training helper |
-| `code/run_decision_zone_formal_training.py` | Formal decision-zone training and evaluation workflow |
-| `code/summarise_formal_outputs.py` | CSV and metric summarisation |
-| `code/evaluate_formal_outputs.py` | Formal output evaluation |
+| `01_code.zip` | Main Python source code and configuration files for detection, simulation, baseline evaluation, and reinforcement-learning experiments. |
+| `Conveyor Belt Project.f3d` | Full Fusion 360 CAD model of the conveyor-belt system. |
+| `Conveyor Belt Shortened.f3d` | Shortened conveyor-belt CAD variant for a more compact system layout. |
+| `Conveyor Belt with Hopper.f3d` | Conveyor-belt CAD model including a hopper structure. |
+| `air jet.f3d` | Fusion 360 CAD model of the pneumatic air-jet sorting component. |
+| `baseline_results.zip` | Baseline controller output files and evaluation results. |
+| `bin (~recovered).f3d` | Recovered Fusion 360 CAD model of the collection bin. |
+| `bin funnel.f3d` | Fusion 360 CAD model of the bin funnel component. |
+| `figures.zip` | Figures and visual materials used for reporting and project explanation. |
+| `meshes.zip` | Mesh assets used by the simulation environment. |
+| `urdfs.zip` | URDF files used for PyBullet simulation models. |
+| `README.md` | Project overview and repository guide. |
 
 ---
 
-## Setup
+## Project Pipeline
 
-Install the Python dependencies:
+1. Tube-like objects move through the conveyor-belt system.
+2. The detection script identifies tube objects and estimates their class, position, and confidence.
+3. The controller decides whether a pneumatic air jet should fire.
+4. The simulation evaluates sorting behaviour and controller response quality.
+5. Baseline results and visual materials are stored in the result and figure archives.
+6. CAD files provide the mechanical design reference for the conveyor, hopper, bin, funnel, and air-jet assemblies.
 
-```bash
-pip install -r requirements.txt
-```
+---
 
-Typical commands:
+## Code Package
 
-```bash
-python code/sample_test.py
-python code/evaluate_baselines.py
-python code/rl_training_ppo.py
-python code/rl_training_sac.py
-```
-
-Some scripts may require restored datasets, model weights, URDF files, or adjusted local paths before full reproduction. Large files excluded from the lightweight upload are listed in:
+The source code is stored in:
 
 ```text
-docs/large_files_not_uploaded.csv
+01_code.zip
 ```
+
+After downloading or cloning the repository, unzip this file before running the Python scripts:
+
+```bash
+unzip 01_code.zip
+```
+
+Depending on the extracted folder name, typical scripts may include:
+
+```bash
+python sample_test.py
+python evaluate_baselines.py
+python rl_training_ppo.py
+python rl_training_sac.py
+```
+
+Some scripts may require the contents of `meshes.zip`, `urdfs.zip`, or `baseline_results.zip` to be extracted into the expected local paths before running.
 
 ---
 
-## Future Work
+## CAD Models
 
-- Physical conveyor prototype validation
-- More realistic pneumatic delay and air-jet force modelling
-- Domain randomisation across belt speed, friction, mass, lighting, and detection confidence
-- Final-bin success and throughput measurement
-- False rejection and air-cost-per-correct-sort metrics
-- Improved reward tuning and repeated-seed RL evaluation
-- Higher-fidelity robotic cap disassembly with torque, friction, and grasp-force validation
+The main mechanical design files are provided as Fusion 360 `.f3d` files:
+
+- `Conveyor Belt Project.f3d`
+- `Conveyor Belt Shortened.f3d`
+- `Conveyor Belt with Hopper.f3d`
+- `air jet.f3d`
+- `bin (~recovered).f3d`
+- `bin funnel.f3d`
+
+These files describe the conveyor structure, sorting mechanism, hopper, collection bin, funnel, and air-jet components used in the system design.
+
+---
+
+## Simulation Assets
+
+The PyBullet simulation assets are stored in:
+
+```text
+meshes.zip
+urdfs.zip
+```
+
+Extract these archives when reproducing or modifying the simulation environment.
+
+---
+
+## Results and Figures
+
+Baseline outputs and project visuals are stored in:
+
+```text
+baseline_results.zip
+figures.zip
+```
+
+These archives contain evaluation outputs, plots, diagrams, and other supporting visual materials for the project report.
+
+---
+
+## Notes
+
+- Large assets are stored as `.zip` archives to keep the repository root compact.
+- Fusion 360 is required to open or modify the `.f3d` CAD files.
+- PyBullet simulation scripts may need local path adjustments after extracting the archives.
+- The repository is structured for upload and review rather than direct one-command reproduction.
 
 ---
 
@@ -214,4 +160,4 @@ docs/large_files_not_uploaded.csv
 MSc Robotics Advanced Project  
 University of Birmingham
 
-Computer Vision | Reinforcement Learning | PyBullet Simulation | Robotic Disassembly | Sustainable Automation
+Computer Vision | Conveyor Simulation | CAD Design | Pneumatic Sorting | Robotics
